@@ -4,21 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 public class Login extends JFrame implements ActionListener {
     JLabel label1, label2, label3;
-
     JTextField textField2;
     JPasswordField passwordField3;
 
     JButton button1,button2,button3;
-
-    Login() {
-
-        super("Bank Management System ");
-
+    Login(){
+        super("Bank Management System");
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/bank.png"));
-        Image i2 = i1.getImage().getScaledInstance(100,100, Image.SCALE_DEFAULT);
+        Image i2 = i1.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);
         image.setBounds(350,10,100,100);
@@ -83,7 +80,6 @@ public class Login extends JFrame implements ActionListener {
         button3.addActionListener(this);
         add(button3);
 
-
         ImageIcon iii1 = new ImageIcon(ClassLoader.getSystemResource("icon/backbg.png"));
         Image iii2 = iii1.getImage().getScaledInstance(850,480,Image.SCALE_DEFAULT);
         ImageIcon iii3 = new ImageIcon(iii2);
@@ -95,21 +91,35 @@ public class Login extends JFrame implements ActionListener {
         setLayout(null);
         setSize(850,480);
         setLocation(450,200);
+        setUndecorated(true);
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try{
-            if(e.getSource() == button1){
-            } else if (e.getSource() == button2) {
+            if (e.getSource()==button1){
+                Connn c = new Connn();
+                String cardno = textField2.getText();
+                String pin = passwordField3.getText();
+                String q = "select * from login where card_number = '"+cardno+"' and  pin = '"+pin+"'";
+                ResultSet resultSet = c.statement.executeQuery(q);
+                if (resultSet.next()){
+                    setVisible(false);
+                    new main_Class(pin);
+                }else {
+                    JOptionPane.showMessageDialog(null,"Incorrect Card Number or PIN");
+                }
+
+
+            }else if (e.getSource() == button2){
                 textField2.setText("");
                 passwordField3.setText("");
-            } else if (e.getSource() == button3) {
-                
+            }else if (e.getSource() == button3){
+                new Signup();
+                setVisible(false);
             }
-        }
-        catch (Exception E){
+        }catch (Exception E){
             E.printStackTrace();
         }
 
