@@ -14,7 +14,7 @@ This is an ongoing project where I am developing a **Bank Management System** us
 - Java (Backend)
 - SQL Database (For data storage)
 - Spring Boot (Planned for scalability)
-
+    
 ## 📌 Future Enhancements
 - Add a UI for better user experience
 - Implement security measures like encryption
